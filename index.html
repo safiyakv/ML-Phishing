@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard - AI Phishing URL Detection System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="page active">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="logo-section">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>PhishGuard</h1>
+                    <p>AI Phishing URL Detection System</p>
+                </div>
+                <form class="login-form">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login to System
+                    </button>
+                </form>
+                <div class="security-indicators">
+                    <div class="indicator">
+                        <i class="fas fa-lock"></i>
+                        <span>256-bit Encryption</span>
+                    </div>
+                    <div class="indicator">
+                        <i class="fas fa-shield-virus"></i>
+                        <span>AI Protection</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- URL Scanner Page -->
+    <div id="scannerPage" class="page">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-shield-alt"></i>
+                <span>PhishGuard – URL Security Scanner</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" onclick="showPage('dashboardPage')">Dashboard</a>
+                <a href="#" onclick="showPage('scannerPage')">Scanner</a>
+                <a href="#">History</a>
+                <a href="#">Reports</a>
+            </div>
+            <div class="nav-status">
+                <div class="status-indicator online">
+                    <span class="status-dot"></span>
+                    System Online
+                </div>
+            </div>
+        </nav>
+
+        <div class="scanner-container">
+            <div class="scanner-header">
+                <h1>Detect Phishing Websites</h1>
+                <p>Enter any URL to analyze it for phishing threats using AI security analysis.</p>
+            </div>
+
+            <div class="url-input-section">
+                <div class="input-wrapper">
+                    <i class="fas fa-globe"></i>
+                    <input type="text" id="urlInput" placeholder="Enter URL to scan (e.g., example.com)" />
+                    <button class="scan-btn" onclick="scanURL()">
+                        <i class="fas fa-search"></i>
+                        Scan URL
+                    </button>
+                </div>
+                <div class="scan-features">
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <span>Real-time analysis</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-line"></i>
+                        <span>100+ threat indicators</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analysis Dashboard Page -->
+    <div id="dashboardPage" class="page">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-shield-alt"></i>
+                <span>PhishGuard – URL Security Scanner</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" onclick="showPage('dashboardPage')">Dashboard</a>
+                <a href="#" onclick="showPage('scannerPage')">Scanner</a>
+                <a href="#">History</a>
+                <a href="#">Reports</a>
+            </div>
+            <div class="nav-status">
+                <div class="status-indicator online">
+                    <span class="status-dot"></span>
+                    System Online
+                </div>
+            </div>
+        </nav>
+
+        <div class="dashboard-container">
+            <!-- Result Card -->
+            <div class="result-card" id="resultCard">
+                <div class="result-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="result-content">
+                    <div class="risk-score-circle">
+                        <span class="score-value" id="riskScore">1%</span>
+                    </div>
+                    <div class="result-status" id="resultStatus">SAFE</div>
+                    <div class="result-message" id="resultMessage">This website appears to be legitimate.</div>
+                </div>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="totalScans">0</div>
+                        <div class="stat-label">Total Scans</div>
+                    </div>
+                </div>
+                <div class="stat-card safe">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="safeUrls">0</div>
+                        <div class="stat-label">Safe URLs</div>
+                    </div>
+                </div>
+                <div class="stat-card suspicious">
+                    <div class="stat-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="suspiciousUrls">0</div>
+                        <div class="stat-label">Suspicious URLs</div>
+                    </div>
+                </div>
+                <div class="stat-card dangerous">
+                    <div class="stat-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="dangerousUrls">0</div>
+                        <div class="stat-label">Dangerous URLs</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Analysis Panel -->
+            <div class="analysis-panel">
+                <h3>Risk Analysis</h3>
+                <div class="analysis-grid">
+                    <div class="analysis-item">
+                        <i class="fas fa-lock"></i>
+                        <span>HTTPS Enabled</span>
+                        <span class="status safe">✓</span>
+                    </div>
+                    <div class="analysis-item">
+                        <i class="fas fa-certificate"></i>
+                        <span>SSL Certificate Status</span>
+                        <span class="status safe">Valid</span>
+                    </div>
+                    <div class="analysis-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>Domain Age</span>
+                        <span class="status safe">5 years</span>
+                    </div>
+                    <div class="analysis-item">
+                        <i class="fas fa-network-wired"></i>
+                        <span>IP Address</span>
+                        <span class="status neutral">172.67.154.85</span>
+                    </div>
+                    <div class="analysis-item">
+                        <i class="fas fa-link"></i>
+                        <span>URL Structure Analysis</span>
+                        <span class="status safe">Normal</span>
+                    </div>
+                    <div class="analysis-item">
+                        <i class="fas fa-search"></i>
+                        <span>Suspicious Keyword Detection</span>
+                        <span class="status safe">None</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Domain Information Panel -->
+            <div class="domain-panel">
+                <h3>Domain Information</h3>
+                <div class="domain-grid">
+                    <div class="domain-item">
+                        <span class="label">Domain Name:</span>
+                        <span class="value" id="domainName">example.com</span>
+                    </div>
+                    <div class="domain-item">
+                        <span class="label">SSL Certificate:</span>
+                        <span class="value status safe">Valid</span>
+                    </div>
+                    <div class="domain-item">
+                        <span class="label">Domain Age:</span>
+                        <span class="value">5 years, 3 months</span>
+                    </div>
+                    <div class="domain-item">
+                        <span class="label">Hosting IP Address:</span>
+                        <span class="value">172.67.154.85</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explainability Section -->
+            <div class="explainability-panel">
+                <h3>Why was this classified as safe?</h3>
+                <div class="explanation-list">
+                    <div class="explanation-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Domain registered for over 5 years (established reputation)</span>
+                    </div>
+                    <div class="explanation-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>No suspicious keywords detected in URL structure</span>
+                    </div>
+                    <div class="explanation-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Valid SSL certificate with proper encryption</span>
+                    </div>
+                    <div class="explanation-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Machine learning model indicates legitimate patterns</span>
+                    </div>
+                </div>
+                <div class="scoring-formula">
+                    <h4>Final Risk Score Calculation</h4>
+                    <div class="formula">
+                        <span class="formula-item">70% Machine Learning Model</span>
+                        <span class="formula-operator">+</span>
+                        <span class="formula-item">30% Rule Based Analysis</span>
+                        <span class="formula-operator">=</span>
+                        <span class="formula-result">1% Risk Score</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scan History Panel -->
+            <div class="history-panel">
+                <h3>Recent Scan History</h3>
+                <div class="history-list">
+                    <div class="history-item">
+                        <div class="history-url">google.com</div>
+                        <div class="history-risk">Risk 4%</div>
+                        <div class="history-status safe">Safe</div>
+                        <div class="history-time">2 mins ago</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-url">login-secure-update.net</div>
+                        <div class="history-risk">Risk 91%</div>
+                        <div class="history-status dangerous">Dangerous</div>
+                        <div class="history-time">15 mins ago</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-url">amazon.com</div>
+                        <div class="history-risk">Risk 2%</div>
+                        <div class="history-status safe">Safe</div>
+                        <div class="history-time">1 hour ago</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-url">verify-account-bank.com</div>
+                        <div class="history-risk">Risk 78%</div>
+                        <div class="history-status suspicious">Suspicious</div>
+                        <div class="history-time">2 hours ago</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-url">github.com</div>
+                        <div class="history-risk">Risk 3%</div>
+                        <div class="history-status safe">Safe</div>
+                        <div class="history-time">3 hours ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
